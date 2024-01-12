@@ -23,11 +23,14 @@ function Board({ xIsNext, squares, onPlay }) {
 
   if (winner) {
     status = `Winner: ${winner}`;
+  } else if (squares.every((square) => square !== null)) {
+    // Check if all squares are filled and no winner
+    status = "Game is drawn!"; // Game is drawn
   } else {
     status = "Next Player " + (xIsNext ? "X" : "O");
   }
 
-  function handClick(i) {
+  function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
@@ -43,21 +46,21 @@ function Board({ xIsNext, squares, onPlay }) {
     <>
       <div>{status}</div>
       <div className="flex">
-        <Square value={squares[0]} onSquareClick={() => handClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handClick(2)} />
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
       </div>
 
       <div className="flex">
-        <Square value={squares[3]} onSquareClick={() => handClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handClick(5)} />
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
       </div>
 
       <div className="flex">
-        <Square value={squares[6]} onSquareClick={() => handClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handClick(8)} />
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
     </>
   );
@@ -67,7 +70,9 @@ export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [xIsNext, setXIsNext] = useState(true);
   const [currentMove, setCurrentMove] = useState(0);
-
+  /* console.log("history"+history);
+console.log("xIsNext"+xIsNext);
+console.log("currentMove"+currentMove); */
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares) {
